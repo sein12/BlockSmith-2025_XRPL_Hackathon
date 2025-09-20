@@ -1,0 +1,136 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL") // e.g. file:./dev.db
+}
+
+/* ---------- User & Auth ---------- */
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  username     String   @unique
+  passwordHash String
+  email        String?  @unique
+  walletAddr   String?  @unique
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  policies     Policy[]
+
+  @@index([username])
+}
+
+/* ---------- Product (콘텐츠 포함) ---------- */
+enum ProductCategory {
+  HEALTH
+  TRAVEL
+  DEVICE
+  PET
+  GIG
+  ESCROW
+  EVENT
+  WARRANTY
+  TELEMED
+  TRANSIT
+  OTHER
+}
+
+model Product {
+  id               String           @id @default(cuid())
+  name             String
+  premiumDrops     BigInt
+  payoutDrops      BigInt          @default(0)    // 보험금 (drops, 1 XRP = 1,000,000 drops)
+
+  coverageSummary  String  // 상품 목록 - 카드 ui에 보이는 설명
+  shortDescription String  // 상세 보기 - 설명
+  descriptionMd    String  // name, shortDescription, features 기반으로 md 텍스트 생성  
+  features         Json
+  active           Boolean          @default(true)
+  createdAt        DateTime         @default(now())
+  category         ProductCategory  @default(OTHER)
+
+  validityDays     Int
+
+  policies         Policy[]
+
+  @@index([active, createdAt])
+  @@index([category, active, createdAt])
+}
+
+/* ---------- Policy (계약) ---------- */
+enum PolicyStatus {
+  ACTIVE
+  EXPIRED
+  CANCELLED
+}
+
+model Policy {
+  id         String       @id @default(cuid())
+  userId     String
+  productId  String
+  status     PolicyStatus @default(ACTIVE)
+
+  escrowId String?
+
+  startAt    DateTime
+  expireAt   DateTime
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  user       User     @relation(fields: [userId], references: [id])
+  product    Product  @relation(fields: [productId], references: [id])
+  claims     Claim[]
+
+  @@index([userId])
+  @@index([productId])
+  @@index([status])
+}
+
+/* ---------- Claim (청구) ---------- */
+enum ClaimStatus {
+  SUBMITTED
+  APPROVED
+  REJECTED
+  PAID
+  MANUAL
+}
+
+enum AiDecision {
+  approve
+  reject
+  manual
+}
+
+model Claim {
+  id             String      @id @default(cuid())
+  policyId       String
+  status         ClaimStatus @default(SUBMITTED)
+  rejectedReason String?
+
+  incidentDate   DateTime    // 사고 일자
+  details        String      // 상세 설명(긴 텍스트)
+
+  productDescriptionMd String          // Product.descriptionMd 스냅샷
+  payoutDropsSnapshot  BigInt          // Product.payoutDrops 스냅샷(drops)
+
+  evidenceUrl    String
+  aiDecision     String?
+  aiRaw          Json?
+
+  payoutAt       DateTime?
+  payoutTxHash   String?
+  payoutMeta     Json?
+
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  policy         Policy      @relation(fields: [policyId], references: [id])
+
+  @@index([policyId, status, createdAt])
+}
