@@ -21,7 +21,7 @@ app/
 먼저, 아래 명령어를 실행해 저장소를 클론하고 `app` 브랜치로 이동하세요.
 
 ```bash
-git clone [https://github.com/sein12/BlockSmith-2025_XRPL_Hackathon.git](https://github.com/sein12/BlockSmith-2025_XRPL_Hackathon.git)
+git clone https://github.com/sein12/BlockSmith-2025_XRPL_Hackathon.git
 cd BlockSmith-2025_XRPL_Hackathon
 git checkout app
 ```
