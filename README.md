@@ -42,23 +42,13 @@
 
 ---
 
-## 🛠️ 실행 방법
+## 브랜치별 안내 (요약)
 
-```bash
-# 클론
-git clone https://github.com/sein12/BlockSmith-2025_XRPL_Hackathon.git
-cd new-repo
+| 브랜치           | 목적 (요약)                        |
+| ---------------- | ---------------------------------- | --- |
+| `main`           | 메인 문서/허브, 리드미             |     |
+| `agent-payment`  | Token Escrow & AI agent            |
+| `app`            | Main App(FE & BE)                  |
+| `frontend-admin` | 관리자 페이지(Agent & Escrow 관리) |
 
-# 설치 및 실행
-npm install
-npm run dev
-🔗 참고
-XRPL 공식 문서
-
-예시 프로젝트: mahir-pa/poap
-
-yaml
-코드 복사
-
----
-```
+> 각 브랜치의 상세한 실행 방법은 해당 브랜치의 `README.md`를 확인하세요.
