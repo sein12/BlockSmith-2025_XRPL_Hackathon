@@ -1,19 +1,17 @@
-# 🚀 프로젝트 이름
+# 🚀 DA-Fi Solution
 
-> DA-Fi Solution
+> 거래는 합의로 성립하며 블록체인은 신뢰를 제공합니다. 우리는 XRPL과 AI Agent 기반 Contextual Transaction 솔루션을 통해 빠르고 안전한 B2C·C2C 거래를 실현합니다.
 
 ## 1️⃣ 데모 영상
 
 프로젝트의 실제 동작을 확인할 수 있는 시연 영상입니다.
 
-- **데모 영상 (무음/짧은 소개 영상)**  
-  [▶️ 시청하기](https://youtu.be/ebTO_YSRljc)
+- **데모 영상**  
+  [▶️ 시청하기](https://youtu.be/3V1SUk8kTH0)
 
 ---
 
 ## 2️⃣ UI 스크린샷
-
-주요 화면 캡처 이미지들을 첨부합니다.
 
 | 메인 화면                                               | 세부 화면                                               |
 | ------------------------------------------------------- | ------------------------------------------------------- |
@@ -27,17 +25,19 @@
 
 - **사용 기술**
 
-  - `xrpl.js` & `xrpl-py`
-  - Token Escrow, Credential
+  - `xrpl` TypeScript/Python 라이브러리 사용
+  - 구현 기능: Token Escrow, Credential
 
 - **구현 내용**
 
   1. XRPL의 Credential을 통한 사용자 인증
   2. 조건 충족 시 자동 결제 트랜잭션 생성
-  3. XRPL의 Token Escrow 기능으로 자금 잠금/해제 처리
-  4. 블록 익스플로러를 통한 트랜잭션 검증
+  3. XRPL의 Token Escrow 기능으로 자금 예약/송금/취소 처리
 
-- **트랜잭션 예시**  
+- **트랜잭션 예시**
+
+  - Wallet Address(Devnet): r9FgT7DUVJg2Y5HxewDchkZxgT4QZKhBRU
+
   [🔗 블록 익스플로러에서 보기](https://devnet.xrpl.org/accounts/r9FgT7DUVJg2Y5HxewDchkZxgT4QZKhBRU)
 
 ---
@@ -46,7 +46,7 @@
 
 ```bash
 # 클론
-git clone https://github.com/username/new-repo.git
+git clone https://github.com/sein12/BlockSmith-2025_XRPL_Hackathon.git
 cd new-repo
 
 # 설치 및 실행
